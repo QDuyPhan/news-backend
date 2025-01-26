@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -38,4 +39,10 @@ public class News implements Serializable {
 
     @Embedded
     Timestamps timestamps;
+
+    @ManyToMany
+    Set<Tag> tags;
+
+    @ManyToMany
+    Set<Category> categories;
 }
