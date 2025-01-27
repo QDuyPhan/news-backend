@@ -1,10 +1,11 @@
 package com.quangduy.newsbackend.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.*;
 
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter

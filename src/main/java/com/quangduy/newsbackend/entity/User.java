@@ -1,10 +1,11 @@
 package com.quangduy.newsbackend.entity;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @Entity
@@ -15,8 +16,9 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    Long id;
+    String id;
 
     @Column(name = "name")
     String name;
@@ -30,8 +32,8 @@ public class User {
     @Column(name = "password")
     String password;
 
-    @ManyToMany
-    Set<Role> roles;
+//    @ManyToMany
+//    Set<Role> roles;
 
     @Embedded
     Timestamps timestamps;

@@ -1,8 +1,4 @@
-package com.quangduy.newsbackend.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+package com.quangduy.newsbackend.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,14 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "permission")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Permission {
-    @Id
+public class PermissionResponse {
     String name;
-
     String description;
 }

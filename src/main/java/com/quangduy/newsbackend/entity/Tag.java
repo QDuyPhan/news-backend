@@ -1,7 +1,7 @@
 package com.quangduy.newsbackend.entity;
 
-
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "tag")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Tag {
     @Id
     @Column(name = "id", unique = true, nullable = false, updatable = false)
