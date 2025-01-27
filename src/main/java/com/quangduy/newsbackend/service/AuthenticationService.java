@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,8 @@ public class AuthenticationService {
     UserRepository userRepository;
 
     @NonFinal
-    protected static final String SIGNER_KEY = "xEC1/JAy43Ctoq/UeEYNDVd1IDI5JO5uji7D9SJ3TmLtFu9e6PPo35we27ElT1Fc";
+    @Value("${jwt.signerKey}")
+    protected String SIGNER_KEY;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) throws JOSEException {
         var user = userRepository
@@ -58,6 +60,7 @@ public class AuthenticationService {
                 .issuer("quangduy.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .claim("customClaim", "Custom")
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(jwsHeader, payload);
@@ -66,6 +69,7 @@ public class AuthenticationService {
         return jwsObject.serialize();
     }
 
+    // verified token
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());

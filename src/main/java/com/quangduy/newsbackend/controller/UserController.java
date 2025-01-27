@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.quangduy.newsbackend.dto.request.UserCreationRequest;
@@ -19,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -35,10 +34,11 @@ public class UserController {
 
     @GetMapping
     ApiResponse<List<UserResponse>> getUsers() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+        //                var authentication = SecurityContextHolder.getContext().getAuthentication();
+        //
+        //                log.info("Username: {}", authentication.getName());
+        //                authentication.getAuthorities().forEach(grantedAuthority ->
+        //         log.info(grantedAuthority.getAuthority()));
 
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getUsers())

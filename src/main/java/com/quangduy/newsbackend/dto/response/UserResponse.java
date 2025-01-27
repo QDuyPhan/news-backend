@@ -1,8 +1,6 @@
 package com.quangduy.newsbackend.dto.response;
 
-import java.util.Set;
-
-import com.quangduy.newsbackend.entity.Timestamps;
+import java.time.LocalDateTime;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +16,7 @@ public class UserResponse {
     String username;
     String email;
     String password;
-//    Set<RoleResponse> roles;
-    Timestamps timestamps;
+    //    Set<RoleResponse> roles;
+    LocalDateTime created_at;
+    LocalDateTime updated_at;
 }

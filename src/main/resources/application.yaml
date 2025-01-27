@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /api
 spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/news_backend"
@@ -9,3 +11,5 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+jwt:
+  signerKey: "xEC1/JAy43Ctoq/UeEYNDVd1IDI5JO5uji7D9SJ3TmLtFu9e6PPo35we27ElT1Fc"

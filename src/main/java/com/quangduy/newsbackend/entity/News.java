@@ -38,8 +38,11 @@ public class News implements Serializable {
     @Column(name = "published_at")
     LocalDateTime publishedAt;
 
-    @Embedded
-    Timestamps timestamps;
+    @Column(name = "created_at")
+    LocalDateTime created_at;
+
+    @Column(name = "updated_at")
+    LocalDateTime updated_at;
 
     @ManyToMany
     Set<Tag> tags;
