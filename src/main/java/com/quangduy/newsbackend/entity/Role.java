@@ -2,6 +2,7 @@ package com.quangduy.newsbackend.entity;
 
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -17,8 +18,10 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Role {
     @Id
+    @Column(name = "name")
     String name;
 
+    @Column(name = "description")
     String description;
 
     @ManyToMany

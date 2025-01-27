@@ -15,8 +15,7 @@ public class UserResponse {
     String name;
     String username;
     String email;
-    String password;
-    //    Set<RoleResponse> roles;
+    // Set<RoleResponse> roles;
     LocalDateTime created_at;
     LocalDateTime updated_at;
 }
