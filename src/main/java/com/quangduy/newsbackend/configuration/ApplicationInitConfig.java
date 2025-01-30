@@ -36,7 +36,7 @@ public class ApplicationInitConfig {
                         .email("admin@admin.com")
                         .created_at(LocalDateTime.now())
                         .updated_at(LocalDateTime.now())
-                        //                        .roles(roles)
+//                        .roles(roles)
                         .password(passwordEncoder.encode("admin"))
                         .build();
                 userRepository.save(user);

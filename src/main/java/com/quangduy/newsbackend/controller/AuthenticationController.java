@@ -2,6 +2,9 @@ package com.quangduy.newsbackend.controller;
 
 import java.text.ParseException;
 
+import com.quangduy.newsbackend.dto.request.LogoutRequest;
+import com.quangduy.newsbackend.dto.request.RefreshRequest;
+import com.quangduy.newsbackend.dto.response.RefreshResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +42,18 @@ public class AuthenticationController {
         var result = authenticationService.introspect(request);
 
         return ApiResponse.<IntrospectResponse>builder().result(result).build();
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder().build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<RefreshResponse> logout(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        return ApiResponse.<RefreshResponse>builder()
+                .result(authenticationService.refreshToken(request))
+                .build();
     }
 }
