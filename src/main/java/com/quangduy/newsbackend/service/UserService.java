@@ -3,18 +3,16 @@ package com.quangduy.newsbackend.service;
 import java.util.HashSet;
 import java.util.List;
 
-import com.quangduy.newsbackend.entity.Role;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quangduy.newsbackend.dto.request.UserCreationRequest;
 import com.quangduy.newsbackend.dto.request.UserUpdateRequest;
 import com.quangduy.newsbackend.dto.response.UserResponse;
+import com.quangduy.newsbackend.entity.Role;
 import com.quangduy.newsbackend.entity.User;
 import com.quangduy.newsbackend.exception.AppException;
 import com.quangduy.newsbackend.exception.ErrorCode;
@@ -24,6 +22,7 @@ import com.quangduy.newsbackend.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -40,10 +39,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
-//        roles.add(Role)
+        //        roles.add(Role)
 
         user.setRoles(roles);
-
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
@@ -53,8 +51,8 @@ public class UserService {
         log.info(String.valueOf(context.getAuthentication()));
         String name = context.getAuthentication().getName();
 
-        User user = userRepository.findByUsername(name).orElseThrow(() ->
-                new AppException(ErrorCode.USER_NOT_EXITSTED));
+        User user =
+                userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITSTED));
         return userMapper.toUserResponse(user);
     }
 
