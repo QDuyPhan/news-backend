@@ -24,7 +24,7 @@ public class User {
     @Column(name = "name")
     String name;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", unique = true, columnDefinition = "VARCHAR(255) COLLATE utf8mb4_unicode_ci")
     String username;
 
     @Column(name = "email", unique = true)
