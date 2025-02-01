@@ -1,4 +1,4 @@
-package com.quangduy.newsbackend.dto.request;
+package com.quangduy.newsbackend.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationRequest {
-    String username;
-    String password;
+public class CategoryResponse {
+    String name;
+    String description;
 }

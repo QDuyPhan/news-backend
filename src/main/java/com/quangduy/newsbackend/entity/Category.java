@@ -11,14 +11,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "category")
+@Table(name = "categories")
 public class Category {
     @Id
-    @Column(name = "id", unique = true, nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     String name;
 
     @Column(name = "description")

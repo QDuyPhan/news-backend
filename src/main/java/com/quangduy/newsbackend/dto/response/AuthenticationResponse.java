@@ -3,8 +3,8 @@ package com.quangduy.newsbackend.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

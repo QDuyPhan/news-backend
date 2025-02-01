@@ -1,10 +1,11 @@
 package com.quangduy.newsbackend.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 import com.quangduy.newsbackend.dto.request.RoleRequest;
 import com.quangduy.newsbackend.dto.response.RoleResponse;
 import com.quangduy.newsbackend.entity.Role;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {

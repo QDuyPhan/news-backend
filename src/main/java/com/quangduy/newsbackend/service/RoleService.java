@@ -1,20 +1,19 @@
 package com.quangduy.newsbackend.service;
 
-import com.quangduy.newsbackend.dto.request.RoleRequest;
-import com.quangduy.newsbackend.dto.response.RoleResponse;
-import com.quangduy.newsbackend.entity.Role;
-import com.quangduy.newsbackend.mapper.RoleMapper;
-import com.quangduy.newsbackend.repository.PermissionRepository;
+import java.util.HashSet;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.quangduy.newsbackend.dto.request.RoleRequest;
+import com.quangduy.newsbackend.dto.response.RoleResponse;
+import com.quangduy.newsbackend.mapper.RoleMapper;
+import com.quangduy.newsbackend.repository.PermissionRepository;
 import com.quangduy.newsbackend.repository.RoleRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

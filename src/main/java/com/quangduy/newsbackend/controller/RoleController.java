@@ -1,17 +1,17 @@
 package com.quangduy.newsbackend.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.quangduy.newsbackend.dto.request.RoleRequest;
 import com.quangduy.newsbackend.dto.response.ApiResponse;
 import com.quangduy.newsbackend.dto.response.RoleResponse;
-import org.springframework.web.bind.annotation.*;
-
 import com.quangduy.newsbackend.service.RoleService;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,12 +22,16 @@ public class RoleController {
 
     @PostMapping
     ApiResponse<RoleResponse> createRole(@RequestBody RoleRequest roleRequest) {
-        return ApiResponse.<RoleResponse>builder().result(roleService.createRole(roleRequest)).build();
+        return ApiResponse.<RoleResponse>builder()
+                .result(roleService.createRole(roleRequest))
+                .build();
     }
 
     @GetMapping
     ApiResponse<List<RoleResponse>> getAllRoles() {
-        return ApiResponse.<List<RoleResponse>>builder().result(roleService.getAllRoles()).build();
+        return ApiResponse.<List<RoleResponse>>builder()
+                .result(roleService.getAllRoles())
+                .build();
     }
 
     @DeleteMapping("/{role}")

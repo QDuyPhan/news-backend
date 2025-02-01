@@ -7,11 +7,6 @@ import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-import com.quangduy.newsbackend.dto.request.LogoutRequest;
-import com.quangduy.newsbackend.dto.request.RefreshRequest;
-import com.quangduy.newsbackend.dto.response.RefreshResponse;
-import com.quangduy.newsbackend.entity.InvalidatedToken;
-import com.quangduy.newsbackend.repository.InvalidatedTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,11 +20,16 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.quangduy.newsbackend.dto.request.AuthenticationRequest;
 import com.quangduy.newsbackend.dto.request.IntrospectRequest;
+import com.quangduy.newsbackend.dto.request.LogoutRequest;
+import com.quangduy.newsbackend.dto.request.RefreshRequest;
 import com.quangduy.newsbackend.dto.response.AuthenticationResponse;
 import com.quangduy.newsbackend.dto.response.IntrospectResponse;
+import com.quangduy.newsbackend.dto.response.RefreshResponse;
+import com.quangduy.newsbackend.entity.InvalidatedToken;
 import com.quangduy.newsbackend.entity.User;
 import com.quangduy.newsbackend.exception.AppException;
 import com.quangduy.newsbackend.exception.ErrorCode;
+import com.quangduy.newsbackend.repository.InvalidatedTokenRepository;
 import com.quangduy.newsbackend.repository.UserRepository;
 
 import lombok.AccessLevel;
@@ -77,7 +77,8 @@ public class AuthenticationService {
                 .subject(user.getUsername())
                 .issuer("quangduy.com")
                 .issueTime(new Date())
-                .expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .expirationTime(new Date(
+                        Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .build();
@@ -97,9 +98,7 @@ public class AuthenticationService {
         } catch (AppException e) {
             inValid = false;
         }
-        return IntrospectResponse.builder()
-                .valid(inValid)
-                .build();
+        return IntrospectResponse.builder().valid(inValid).build();
     }
 
     // tạo scope chứa các thông tin role của user
@@ -114,20 +113,22 @@ public class AuthenticationService {
         var signToken = verifyToken(request.getToken(), true);
         String jit = signToken.getJWTClaimsSet().getJWTID();
         Date expirationDate = signToken.getJWTClaimsSet().getExpirationTime();
-        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
-                .id(jit)
-                .expiryTime(expirationDate)
-                .build();
+        InvalidatedToken invalidatedToken =
+                InvalidatedToken.builder().id(jit).expiryTime(expirationDate).build();
         invalidatedTokenRepository.save(invalidatedToken);
     }
 
     private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
-        Date expirationDate =
-                (isRefresh) ? new Date(signedJWT.getJWTClaimsSet()
-                        .getIssueTime().toInstant().plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS).toEpochMilli())
-                        : signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expirationDate = (isRefresh)
+                ? new Date(signedJWT
+                        .getJWTClaimsSet()
+                        .getIssueTime()
+                        .toInstant()
+                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                        .toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
         var verifiedToken = signedJWT.verify(verifier);
         // nếu chữ ký không hợp lệ hoặc token hết hạn
         if (!verifiedToken && expirationDate.after(new Date())) throw new AppException(ErrorCode.UNAUTHENTICATED);
@@ -140,14 +141,14 @@ public class AuthenticationService {
         var signToken = verifyToken(request.getToken(), true);
         String jit = signToken.getJWTClaimsSet().getJWTID();
         Date expirationDate = signToken.getJWTClaimsSet().getExpirationTime();
-        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
-                .id(jit)
-                .expiryTime(expirationDate)
-                .build();
+        InvalidatedToken invalidatedToken =
+                InvalidatedToken.builder().id(jit).expiryTime(expirationDate).build();
         invalidatedTokenRepository.save(invalidatedToken);
 
         var username = signToken.getJWTClaimsSet().getSubject();
-        var user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITSTED));
+        var user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITSTED));
         var token = generateToken(user);
         return RefreshResponse.builder().authenticated(true).token(token).build();
     }
