@@ -44,8 +44,8 @@ public class News implements Serializable {
     @Column(name = "updated_at")
     LocalDateTime updated_at;
 
-    @ManyToMany
-    Set<Tag> tags;
+    //    @ManyToMany
+    //    Set<Tag> tags;
 
     @ManyToMany
     Set<Category> categories;

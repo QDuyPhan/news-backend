@@ -3,12 +3,14 @@ package com.quangduy.newsbackend.service;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.quangduy.newsbackend.constant.PredefinedRole;
 import com.quangduy.newsbackend.dto.request.UserCreationRequest;
 import com.quangduy.newsbackend.dto.request.UserUpdateRequest;
 import com.quangduy.newsbackend.dto.response.UserResponse;
@@ -17,6 +19,7 @@ import com.quangduy.newsbackend.entity.User;
 import com.quangduy.newsbackend.exception.AppException;
 import com.quangduy.newsbackend.exception.ErrorCode;
 import com.quangduy.newsbackend.mapper.UserMapper;
+import com.quangduy.newsbackend.repository.RoleRepository;
 import com.quangduy.newsbackend.repository.UserRepository;
 
 import lombok.AccessLevel;
@@ -30,20 +33,26 @@ import lombok.extern.slf4j.Slf4j;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserMapper userMapper;
     BCryptPasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
-        //        roles.add(Role)
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
 
-        return userMapper.toUserResponse(userRepository.save(user));
+        try {
+            user = userRepository.save(user);
+        } catch (DataIntegrityViolationException exception) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
+
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse getMyInfo() {
