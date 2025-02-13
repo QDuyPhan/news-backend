@@ -1,5 +1,6 @@
 package com.quangduy.newsbackend.service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user.setCreated_at(LocalDateTime.now());
+        user.setUpdated_at(LocalDateTime.now());
 
         try {
             user = userRepository.save(user);
