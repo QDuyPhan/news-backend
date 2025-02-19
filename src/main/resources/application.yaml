@@ -2,7 +2,12 @@ server:
   port: 8080
   servlet:
     context-path: /api
-  address: 127.0.0.1
+  #  ssl:
+  #    key-store: classpath:mykeystore.jks
+  #    key-store-password: password
+  #    key-store-type: JKS
+  #    key-alias: mydomain
+  address: 192.168.0.2
 spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/news_backend"
