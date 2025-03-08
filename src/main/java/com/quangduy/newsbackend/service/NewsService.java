@@ -47,4 +47,16 @@ public class NewsService {
     public void deleteNews(Long newsId) {
         newsRepository.deleteById(newsId);
     }
+
+    public List<NewsResponse> findByCategory(String category) {
+        try {
+            return newsRepository
+                    .findByCategoryName(category)
+                    .stream()
+                    .map(newsMapper::toNewsResponse)
+                    .collect(Collectors.toList());
+        } catch (DataException e) {
+            throw new AppException(ErrorCode.DATABASE_ERROR);
+        }
+    }
 }

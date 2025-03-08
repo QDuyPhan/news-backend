@@ -17,7 +17,7 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     USER_EXISTED(409, "User existed, please again", HttpStatus.CONFLICT),
     NOT_FOUND(404, "Not Found", HttpStatus.NOT_FOUND),
-    INVALID_KEY(1001, "Invalid message key", HttpStatus.BAD_REQUEST),
+    INVALID_KEY(1002, "Invalid message key", HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR(500, "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR),
     USERNAME_INVALID(400, "Username must be at least 3 character", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(400, "Password must be at least 8 character", HttpStatus.BAD_REQUEST),

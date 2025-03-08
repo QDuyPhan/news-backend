@@ -39,4 +39,11 @@ public class NewsController {
         newsService.deleteNews(newId);
         return ApiResponse.<Void>builder().build();
     }
+
+    @GetMapping("/{categoryName}")
+    ApiResponse<List<NewsResponse>> getAllNewsByCategory(@PathVariable String categoryName) {
+        return ApiResponse.<List<NewsResponse>>builder()
+                .result(newsService.findByCategory(categoryName))
+                .build();
+    }
 }
