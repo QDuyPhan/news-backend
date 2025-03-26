@@ -21,6 +21,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR),
     USERNAME_INVALID(400, "Username must be at least 3 character", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(400, "Password must be at least 8 character", HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(400, "Malformed token: Token is missing or malformed", HttpStatus.BAD_REQUEST),
     USER_NOT_EXITSTED(404, "User not existed", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(401, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(403, "Access Deny: You do not permission", HttpStatus.FORBIDDEN),

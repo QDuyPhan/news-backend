@@ -35,7 +35,7 @@ public class NewsController {
     }
 
     @DeleteMapping("/{newId}")
-    ApiResponse<Void> deleteCategory(@PathVariable Long newId) {
+    ApiResponse<Void> deleteNews(@PathVariable Long newId) {
         newsService.deleteNews(newId);
         return ApiResponse.<Void>builder().build();
     }

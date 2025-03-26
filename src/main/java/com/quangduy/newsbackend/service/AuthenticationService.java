@@ -120,14 +120,15 @@ public class AuthenticationService {
 
     private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+        if (token == null || !token.contains(".")) throw new AppException(ErrorCode.INVALID_TOKEN);
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expirationDate = (isRefresh)
                 ? new Date(signedJWT
-                        .getJWTClaimsSet()
-                        .getIssueTime()
-                        .toInstant()
-                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
-                        .toEpochMilli())
+                .getJWTClaimsSet()
+                .getIssueTime()
+                .toInstant()
+                .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                .toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
         var verifiedToken = signedJWT.verify(verifier);
         // nếu chữ ký không hợp lệ hoặc token hết hạn

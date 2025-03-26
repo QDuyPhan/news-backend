@@ -16,6 +16,6 @@ public interface NewsMapper {
 
     //    @Mapping(target = "categories", ignore = true)
     List<News> toNewsList(List<NewsRequest> newsRequests);
-
+    
     NewsResponse toNewsResponse(News news);
 }
