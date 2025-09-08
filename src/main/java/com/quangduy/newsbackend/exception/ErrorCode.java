@@ -24,6 +24,7 @@ public enum ErrorCode {
     INVALID_TOKEN(400, "Malformed token: Token is missing or malformed", HttpStatus.BAD_REQUEST),
     USER_NOT_EXITSTED(404, "User not existed", HttpStatus.NOT_FOUND),
     EMAIL_ALREADY_EXISTS(405, "Email already existed", HttpStatus.CONFLICT),
+    WRONG_OLD_PASSWORD(406, "Wrong pass word", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(401, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(403, "Access Deny: You do not permission", HttpStatus.FORBIDDEN),
     DATABASE_ERROR(1001, "Database error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
